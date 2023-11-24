@@ -30,11 +30,4 @@ export const options: NextAuthOptions = {
       }
     })
   ],
-  // pages: {
-  //   signIn: "/signin",
-  //   signOut: "/signout",
-  //   error: "/error",
-  //   verifyRequest: "/auth/verify-request",
-  //   newUser: undefined
-  // },
 }
