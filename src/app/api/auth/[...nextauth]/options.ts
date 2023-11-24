@@ -22,25 +22,26 @@ export const options: NextAuthOptions = {
         password: {label: "Password", type: "password"},
       },
       async authorize(credentials) {
-
         // check to see if the username and password are valid
-        if (!credentials.username || !credentials.password) return null;
+        if (!credentials?.username || !credentials?.password) return null;
         
         const user = await getUserByUsername(credentials.username);
-        
-        if (!user) return null;
+        console.log(user)
+        if (!user) {
+          console.log('User not found');
+          return null;
+        }
         
         // check if the password match
         const passwordMatch = await bcrypt.compare(credentials.password, user.password);
-      
+        
         if (!passwordMatch) {
+          console.log('Password does not match');
           return null;
         }
         
         // return user if valid
-        
         return user;
-      
       }
     }),
   ],
@@ -49,7 +50,22 @@ export const options: NextAuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET as string,
   debug: process.env.NODE_ENV === "development",
-  
+  callbacks: {
+    async jwt({ token, user, account, profile, isNewUser }) {
+      if (user) {
+        token.user = user;
+      }
+      console.log(token)
+      return token
+    },
+    async session({ session, token }) {
+      if (token?.user) {
+        session.user = token.user;
+      }
+      console.log(session)
+      return session
+    },
+  }
 };
 
 

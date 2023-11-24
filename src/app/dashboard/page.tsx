@@ -1,13 +1,22 @@
-import { FC } from 'react'
+'use client'
 
-interface pageProps {
+import {FC} from 'react'
+import {useSession} from "next-auth/react";
+
+interface PageProps {
 
 }
 
-const page: FC<pageProps> = ({}) => {
-    return (
+const Page: FC<PageProps> = ({}) => {
+  
+  const { data: session, status } = useSession()
+  console.log(session)
+  
+  return (
+    <div>
       <h1>dASHBOARD</h1>
-    )
+    </div>
+  )
 }
 
-export default page
+export default Page
