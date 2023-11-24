@@ -1,5 +1,6 @@
 'use client'
 import {trpc} from "@/src/backend/trpc/client";
+import Link from "next/link";
 
 
 export default function Home() {
@@ -19,6 +20,9 @@ export default function Home() {
           <p>{book.author}</p>
         </div>
       ))}
+      <hr/>
+      <Link href={'/register'}>register</Link><br/>
+      <Link href={'/login'}>login</Link>
     </main>
   );
 }
